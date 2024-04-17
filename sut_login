@@ -1,0 +1,139 @@
+#!/bin/bash
+
+LOGIN_URL='https://net2.sharif.edu/login'
+
+INFO_FILE='info'
+
+create_INFO_FILE() {
+    echo "Enter your username:"
+    read -r USERNAME
+    echo -e "\033[32m""Don't worry, your pass is coming in, it won't be shown on the terminal just for security :)""\033[0m"
+    echo "Enter your password:"
+    read -r -s PASSWORD
+    echo
+
+    echo "$USERNAME" > "$INFO_FILE"
+    echo "$PASSWORD" >> "$INFO_FILE"
+    chmod 600 "$INFO_FILE"
+
+    echo "Credentials saved to $INFO_FILE"
+}
+
+decrypt_INFO_FILE() {
+    USERNAME=$(sed -n '1p' "$INFO_FILE")
+    PASSWORD=$(sed -n '2p' "$INFO_FILE")
+
+    rm "$INFO_FILE"
+}
+
+remove_INFO_FILE() {
+    if [ -f "$INFO_FILE" ]; then
+        rm "$INFO_FILE"
+        echo "credentials removed from $INFO_FILE"
+    else
+        echo "No encrypted credentials found to remove."
+    fi
+}
+
+login() {
+    if [ -f "$INFO_FILE" ]; then
+        decrypt_INFO_FILE
+    else
+        echo "Enter your username:"
+        read -r USERNAME
+        echo -e "\033[32m""Don't worry, your pass is coming in, it won't be shown on the terminal just for security :)""\033[0m"
+        echo "Enter your password:"
+        read -r -s PASSWORD
+        echo
+    fi
+
+    response=$(curl -s -o /dev/null -w "%{http_code}" -X POST "$LOGIN_URL" \
+      -d "USERNAME=$USERNAME" \
+      -d "PASSWORD=$PASSWORD")
+
+    if [ "$response" -ne 200 ]; then
+        echo 'Natonestam Jenaab!'
+        exit 1
+    fi
+
+    echo 'Login successful!'
+}
+
+case "$1" in
+    install)
+
+        if [ "$2" == "--help" ];then
+            echo '
+                Install the script to makes possible using it in any PATH
+
+                Usage:
+                  sut_login install
+
+                Flags:
+                  -h, --help   help for install
+
+                Use "sut_login [command] --help" for more information about a command.
+            '
+        fi
+
+        mkdir ~/.local/bin/ 2>/dev/null
+        cp sut_login ~/.local/bin/sut_login
+        chmod 700 ~/.local/bin/sut_login
+        echo 'export PATH="$PATH:/home/$USER/.local/bin"' >> "$HOME/."$(echo $SHELL | awk -F '/' '{print $NF}')"rc"
+        ;;
+    create_profile)
+
+        if [ "$2" == "--help" ];then
+            echo '
+                Store your username and password to never ask again
+
+                Usage:
+                  sut_login create_profile
+
+                Flags:
+                  -h, --help   help for install
+
+                Use "sut_login [command] --help" for more information about a command.
+            '
+        fi
+
+        create_INFO_FILE
+        ;;
+    remove_profile)
+
+        if [ "$2" == "--help" ];then
+            echo '
+                Remove the stored username and password file
+
+                Usage:
+                  sut_login remove_profile
+
+                Flags:
+                  -h, --help   help for install
+
+                Use "sut_login [command] --help" for more information about a command.
+            '
+        fi
+
+        remove_INFO_FILE
+        ;;
+    "")
+        login
+        ;;
+    *)
+        echo '
+            This is a simple script that helps you to login easier :D
+
+            Usage:
+            sut_login [command]
+
+            Available Commands:
+              install           Install the script to makes possible using it in any PATH
+              create_profile    Store your username and password to never ask again
+              remove_profile    Remove the stored username and password file
+              help              Help about any command
+
+            Use "sut_login [command] --help" for more information about a command.
+            '
+        ;;
+esac
