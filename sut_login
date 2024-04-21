@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 LOGIN_URL='https://net2.sharif.edu/login'
 
@@ -77,8 +77,8 @@ case "$1" in
         fi
 
         mkdir ~/.local/bin/ 2>/dev/null
-        cp sut_login "${FILE_PATH}"
-        chmod 700 ~/.local/bin/sut_login
+        cp $1 "${FILE_PATH}/sut_login"
+        chmod 700 "${FILE_PATH}/sut_login"
         echo 'export PATH="$PATH:/home/$USER/.local/bin"' >> "$HOME/."$(echo $SHELL | awk -F '/' '{print $NF}')"rc"
         ;;
     create_profile)
