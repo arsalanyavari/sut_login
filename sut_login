@@ -174,7 +174,7 @@ case "$1" in
     Use "sut_login [command] --help" for more information about a command.
     '
         fi
-        curl --resolve "$DOMAIN:$LOGIN_PORT:$LOGIN_IP" -s -o nul -X GET "http://net2.sharif.ir/logout"
+        curl --resolve "$DOMAIN:$LOGIN_PORT:$LOGIN_IP" -s -o /dev/null -X GET "http://net2.sharif.ir/logout"
         ;;
     "")
         login
