@@ -5,6 +5,22 @@ set "LOGIN_URL=https://net2.sharif.edu/login"
 set "INFO_FILE=info"
 set "FILE_PATH=%USERPROFILE%\.local\bin\"
 
+setlocal enabledelayedexpansion
+echo "!PATH!" | findstr /C:"%FILE_PATH%" >nul
+if errorlevel 1 (
+    setx PATH "%PATH%;%FILE_PATH%" 
+)
+
+@REM set "found=false"
+@REM for %%I in (%PATH%) do (
+@REM     echo "%%~I"
+@REM     if /i "%%~I"=="%FILE_PATH%" (
+@REM         set "found=true"
+@REM     )
+@REM )
+@REM if "%found%"=="false" (
+@REM     setx PATH "%PATH%;%FILE_PATH%"
+@REM )
 
 if "%1"=="install" (
     if "%2"=="--help" (
@@ -77,22 +93,10 @@ if "%1"=="install" (
     echo "If you are not N00B, run it from cmd. U can use -h to see it's help :)"
     color 0F
     if not exist "%USERPROFILE%\.local\bin\sut_login" (
-        mkdir "%USERPROFILE%\.local\bin\" 2>nul
-        copy "%~f0" "%USERPROFILE%\.local\bin\sut_login.bat" 2>nul
+        mkdir "%USERPROFILE%\.local\bin\" 2>nul >nul
+        copy "%~f0" "%USERPROFILE%\.local\bin\sut_login.bat" 2>nul >nul
         @REM icacls "%USERPROFILE%\.local\bin\sut_login" /inheritance:r /grant:r "%USERNAME%:(CI)(OI)F" /t
         attrib +h "%USERPROFILE%\.local"
-
-        set "FILE_PATH=%USERPROFILE%\.local\bin\"
-
-        set "FILE_PATH_EXIST="
-        for %%I in ("%PATH:;=" "%") do (
-            if /I "%%~I"=="%FILE_PATH%" (
-                set "FILE_PATH_EXIST=1"
-            )
-        )
-        if not defined FILE_PATH_EXIST (
-            setx PATH "%PATH%;%FILE_PATH%"
-        )
     )
     if not exist "%FILE_PATH%%INFO_FILE%" (
         color 0A
@@ -103,7 +107,9 @@ if "%1"=="install" (
             call :create_info_file
         )
     )
+    
     call :login
+    pause
 ) else (
     echo.
     echo This is a simple script that helps you to login easier :D
