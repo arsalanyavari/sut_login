@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
 LOGIN_URL='https://net2.sharif.edu/login'
+DOMAIN='net2.sharif.edu'
+LOGIN_IP='172.17.1.214'
+LOGIN_PORT='443'
 
 INFO_FILE='info'
 FILE_PATH="$HOME/.local/bin/"
@@ -47,7 +50,7 @@ login() {
         echo
     fi
 
-    response=$(curl -s -o /dev/null -w "%{http_code}" -X POST "$LOGIN_URL" \
+    response=$(curl --resolve "$DOMAIN:$LOGIN_PORT:$LOGIN_IP" -s -o /dev/null -w "%{http_code}" -X POST "$LOGIN_URL" \
       -d "USERNAME=$USERNAME" \
       -d "PASSWORD=$PASSWORD")
 
