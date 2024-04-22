@@ -1,0 +1,137 @@
+    <?php
+   $mac=$_POST['mac'];
+   $ip=$_POST['ip'];
+   $username=$_POST['username'];
+   $linklogin="https://172.17.1.166/login";
+   $linkorig=$_POST['link-orig'];
+   $linkloginonly="https://172.17.1.166/login";
+   $error=$_POST['error'];
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>logout</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="expires" content="-1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="css/util.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <!--===============================================================================================-->
+</head>
+
+<body>
+
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100">
+                <form class="login100-form validate-form" method="POST" action="http://net2.sharif.ir/login">
+                    <div style="display: flex">
+                        <img src="images/icons/ictc3-blue.png" class="login100-form-logo2" />
+                        <img src="images/icons/sharif-blue.png" class="login100-form-logo" />
+                    </div>
+                </form>
+                <form action="http://net2.sharif.ir/logout" name="logout" onsubmit="return openLogout()" class="login100-form" style="direction: rtl;">
+
+
+
+                    <table width="100%" style="direction: ltr;">
+
+                        <tr>
+                            <td align="center" valign="middle">
+                                <br>
+                                <b>شما از سامانه خارج شدید</b> <br><br>
+                                <table width="100%" border="0" style="margin-left: 35px">
+                                    <tr>
+                                        <td align="left">Username:</td>
+                                        <td>amirarsalan.yavari79</td>
+                                    </tr>
+                                    <tr>
+                                        <td align="left">IP address:</td>
+                                        <td>94.184.130.249</td>
+                                    </tr>
+                                    <tr>
+                                        <td align="left">MAC address:</td>
+                                        <td>00:C1:64:C7:05:40</td>
+                                    </tr>
+                                    <tr>
+                                        <td align="left">Session time:</td>
+                                        <td>23m28s</td>
+                                    </tr>
+                                    <!--  -->
+                                    <tr>
+                                        <td align="left">Time left:</td>
+                                        <td>7h36m32s</td>
+                                    </tr>
+                                    <!--  -->
+                                    <tr>
+                                        <td align="left">Bytes up:</td>
+                                        <td>3.2 MiB</td>
+                                    </tr>
+                                    <tr>
+                                        <td align="left">Bytes down:</td>
+                                        <td> 8.3 MiB</td>
+                                    </tr>
+                                </table>
+                                <br>
+                                <br>
+                                <br>
+                                <form action="https://net2.sharif.edu/login" name="log in" onSubmit="return openLogin()">
+                                    <!-- <input type="submit" value="log out" class="login100-form-btn"> -->
+                                    <div class="container-login100-form-btn">
+
+                                        <button type="submit" class="login100-form-btn">
+                                            ورود دوباره
+                                        </button>
+                                    </div>
+                                </form>
+                            </td>
+                    </table>
+
+                    <br>
+                    <!-- user manager link. if user manager resides on other router, replace 172.17.1.214 by its address
+                    <button onclick="document.location='http://172.17.1.214/user?subs='; return false;">status</button>
+                    <!-- end of user manager link -->
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--===============================================================================================-->
+    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/bootstrap/js/popper.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/daterangepicker/moment.min.js"></script>
+    <script src="vendor/daterangepicker/daterangepicker.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/countdowntime/countdowntime.js"></script>
+    <!--===============================================================================================-->
+    <script src="js/main.js"></script>
+</body>
+
+</html>

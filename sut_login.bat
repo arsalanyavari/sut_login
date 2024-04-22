@@ -11,17 +11,6 @@ if errorlevel 1 (
     setx PATH "%PATH%;%FILE_PATH%" 
 )
 
-@REM set "found=false"
-@REM for %%I in (%PATH%) do (
-@REM     echo "%%~I"
-@REM     if /i "%%~I"=="%FILE_PATH%" (
-@REM         set "found=true"
-@REM     )
-@REM )
-@REM if "%found%"=="false" (
-@REM     setx PATH "%PATH%;%FILE_PATH%"
-@REM )
-
 if "%1"=="install" (
     if "%2"=="--help" (
         echo.

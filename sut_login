@@ -80,10 +80,29 @@ case "$1" in
         fi
 
         mkdir ~/.local/bin/ 2>/dev/null
-        cp $1 "${FILE_PATH}/sut_login"
+        cp $0 "${FILE_PATH}/sut_login" 2>/dev/null
         chmod 700 "${FILE_PATH}/sut_login"
         echo 'export PATH="$PATH:/home/$USER/.local/bin"' >> "$HOME/."$(echo $SHELL | awk -F '/' '{print $NF}')"rc"
         ;;
+
+    uninstall)
+
+        if [ "$2" == "--help" ];then
+            echo '
+    Uninstall the script to clean your system
+
+    Usage:
+      sut_login uninstall
+
+    Flags:
+      -h, --help   help for uninstall
+
+    Use "sut_login [command] --help" for more information about a command.
+    '
+        fi
+        rm -rf "${FILE_PATH}/sut_login" "${FILE_PATH}/info" 2>/dev/null
+        ;;
+
     create_profile)
 
         if [ "$2" == "--help" ];then
@@ -94,7 +113,7 @@ case "$1" in
       sut_login create_profile
 
     Flags:
-      -h, --help   help for install
+      -h, --help   help for create_profile
 
     Use "sut_login [command] --help" for more information about a command.
     '
@@ -102,6 +121,27 @@ case "$1" in
 
         create_info_file
         ;;
+    
+    update_profile)
+
+        if [ "$2" == "--help" ];then
+            echo '
+    Update your username and password to never ask again
+
+    Usage:
+      sut_login update_profile
+
+    Flags:
+      -h, --help   help for update_profile
+
+    Use "sut_login [command] --help" for more information about a command.
+    '
+        fi
+        remove_info_file
+        echo "Now please enter the new information"
+        create_info_file
+        ;;
+
     remove_profile)
 
         if [ "$2" == "--help" ];then
@@ -112,13 +152,29 @@ case "$1" in
       sut_login remove_profile
 
     Flags:
-      -h, --help   help for install
+      -h, --help   help for remove_profile
 
     Use "sut_login [command] --help" for more information about a command.
     '
         fi
 
         remove_info_file
+        ;;
+    logout)
+        if [ "$2" == "--help" ];then
+            echo '
+    Just for logging out of net2 buddy :)
+
+    Usage:
+      sut_login logout
+
+    Flags:
+      -h, --help   help for logout
+
+    Use "sut_login [command] --help" for more information about a command.
+    '
+        fi
+        curl --resolve "$DOMAIN:$LOGIN_PORT:$LOGIN_IP" -s -o nul -X GET "http://net2.sharif.ir/logout"
         ;;
     "")
         login
@@ -132,8 +188,11 @@ case "$1" in
 
     Available Commands:
       install           Install the script to makes possible using it in any PATH
+      uninstall         Uninstall the script to make your system clean
       create_profile    Store your username and password to never ask again
+      update_profile    Update your username and password to never ask again
       remove_profile    Remove the stored username and password file
+      logout            For logging out from `http://net2.sharif.ir/logout`
       help              Help about any command
 
     Use "sut_login [command] --help" for more information about a command.
